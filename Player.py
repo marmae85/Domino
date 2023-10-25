@@ -1,3 +1,5 @@
+from Domino import Domino
+
 class Player:
     def __init__(self, hand):
         self.hand = hand
@@ -5,7 +7,7 @@ class Player:
     def getMin(self):
         min = 13
         for i in range(len(self.hand)):
-            (v1, v2) = self.hand[i]#.getValue()
+            (v1, v2) = self.hand[i].getValue()
             currentvalue = v1 + v2
             if currentvalue < min:
                 min = currentvalue
@@ -13,8 +15,8 @@ class Player:
     def getMax(self):
         max = 0
         for i in range(len(self.hand)):
-            (v1, v2) = self.hand[i]#.getValue()
-            currentvalue = v1 +v2
+            (v1, v2) = self.hand[i].getValue()
+            currentvalue = v1 + v2
             if currentvalue > max:
                 max = currentvalue
         return max

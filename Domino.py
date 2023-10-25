@@ -1,7 +1,8 @@
 class Domino :
     direction
     value
-    def __init__(self,type,):
+    direction = "East"
+    def __init__(self,type):
         self.value = [type[0],type[1]]
 
     def setValue(self,value):
@@ -16,4 +17,14 @@ class Domino :
     def getDirection(self,direction):
         self.direction = direction
 
+    def change_direction(self,direction):
+        tempo
+        if direction == "N":
+            self.value = value
+        if direction == "S":
+            self.value = value
+        if direction == "E":
+            self.value = value
+        if direction == "O":
+            self.value = value
 

@@ -19,6 +19,7 @@ if __name__ == '__main__':
                 dominosbag.append((j,i))
         print(dominosbag)
     bag_dominos()
+    print("patate")
 
 
 

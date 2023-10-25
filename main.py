@@ -13,11 +13,8 @@ bag = bag_dominos() # variable bag est la liste des dominos
 #print(bag)
 
 def distribution():
-    for i in range(8):
-        random_domino = random.randint(0, len(bag) - 1) #pioche un domino random dans le sac
-        main = bag.append()
-    print("voilà tes 7 dominos batard",main)
-
+    hand = random.sample(bag, 7) #pioche un domino random dans le sac
+    print("voilà tes 7 dominos",hand)
 distribution()
 
 def main():

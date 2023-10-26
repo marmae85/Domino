@@ -8,13 +8,12 @@
 """
 
 class Domino :
-    value=[0,0]
     direction = ""
-    affichage=[str(value[0]),str(value[1])]
 
     def __init__(self,type):
         self.value = type
         self.direction="E"
+        self.affichage = [str(self.value[0]), str(self.value[1])]
 
     def setValue(self,value):
         self.value=value

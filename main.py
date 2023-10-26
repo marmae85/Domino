@@ -3,12 +3,16 @@
 # Press Maj+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 import random
+from Domino import Domino
 def bag_dominos():
-    list = []
+    pioche_obj = []
+    liste_coo=[]
     for i in range(7):
         for j in range(i + 1):
-            list.append((j, i))
-    return list
+            pioche_obj.append(Domino([j,i]))
+            liste_coo.append(pioche_obj[j].getValue())
+            print(pioche_obj)
+    return liste_coo
 bag = bag_dominos() # variable bag est la liste des dominos
 print(bag)
 
@@ -26,6 +30,15 @@ supression_bag(hand)
 print("après distribution", bag)
 
 def main():
+    choix=displayMenu()
+    if choix==1:
+        "jeu"
+    elif choix== 2 :
+        "charger"
+    elif choix == 3:
+        "regles"
+    elif choix==4:
+        "quitter"
     return
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':

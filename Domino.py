@@ -1,5 +1,5 @@
 """
-- creer domino "A", argument: le tableau de valeurs :                D= Domino([7,8])
+- creer domino "D", argument: le tableau de valeurs :                D= Domino([7,8])
 - établir la direction du domino (N,S,E,O) :                         D.setDirection("N")
 - obtenir les valeurs du domino : renvoie un tableau à 2 valeurs     D.getValue()
 - définir l'affichage, en parametre la direction :                   D.setAffichage(D.getDirection)
@@ -24,7 +24,6 @@ class Domino :
         self.direction=dir
 
     def getValue(self):
-        print(self.value)
         return self.value
 
     def getDirection(self,direction):

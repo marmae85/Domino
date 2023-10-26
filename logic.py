@@ -42,7 +42,7 @@ def round(player):
         player.getValue[number].reverse()
 
 
-""" #pour afficher les mains en test
+""" #pour afficher les mains en test 
     j11=[]
     j22=[]
     for i in range(len(bag)):

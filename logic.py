@@ -10,9 +10,9 @@ def init(name1,name2):
     player1.setUsername(name1)
     player2=Player(distribution(bag))
     player2.setUsername(name2)
+    return (player1,player2)
 
-
-def game():
+def game(player1,player2):
     fin_partie=False
     max1=player1.getMax()
     max2=player2.getMax()

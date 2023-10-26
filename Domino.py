@@ -26,7 +26,6 @@ class Domino :
         return self.value
 
     def getDirection(self):
-        print(self.direction)
         return(self.direction)
 
     def setAffichage(self):

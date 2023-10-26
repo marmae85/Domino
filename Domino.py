@@ -25,7 +25,7 @@ class Domino :
     def getValue(self):
         return self.value
 
-    def getDirection(self,direction):
+    def getDirection(self):
         print(self.direction)
         return(self.direction)
 

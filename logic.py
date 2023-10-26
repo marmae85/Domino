@@ -13,7 +13,11 @@ def init(name1,name2):
 
 
 def partie():
-    while ()
+    fin_partie=False
+    joueur1
+    while (not fin_partie):
+
+
 
 """ #pour afficher les mains en test
     j11=[]

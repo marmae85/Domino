@@ -1,5 +1,5 @@
 
-from logic import init, partie
+from logic import init, game
 from Display import displayMenu, displayRules, clr
 def main():
     while 1:
@@ -7,8 +7,8 @@ def main():
         if action == 1:
             name1 = input("Entrez le nom d'un joueur : ")
             name2 = input("Entrez le nom d'un joueur : ")
-            init(name1, name2)
-            partie()
+            (player1, player2) = init(name1, name2)
+            game(player1, player2)
         elif action == 2:
             loadGame()
         elif action == 3:

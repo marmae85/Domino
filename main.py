@@ -10,12 +10,20 @@ def bag_dominos():
             list.append((j, i))
     return list
 bag = bag_dominos() # variable bag est la liste des dominos
-#print(bag)
+print(bag)
 
 def distribution():
     hand = random.sample(bag, 7) #pioche un domino random dans le sac
-    print("voilà tes 7 dominos",hand)
-distribution()
+    return hand
+hand = distribution()
+print("voilà tes 7 dominos", hand)
+def supression_bag(hand):
+    for k in range(len(hand)):
+        for i in range(len(bag)-1, 0, -1):
+            if bag[i] == hand[k]:
+             bag.pop(i)
+supression_bag(hand)
+print("après distribution", bag)
 
 def main():
     return

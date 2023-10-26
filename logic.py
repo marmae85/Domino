@@ -1,34 +1,36 @@
 import random
 from Domino import Domino
 
-def jeu():
+def jeu(player1,player2):
     #Début du jeu
     bag=bag_dominos()
-    print("1",bag)
-    a=bag[3].getValue
-    print("2", a)
-    j1=distribution(bag)
-    j2=distribution(bag)
-    print("2",j1)
-    print("3",j2)
-    print("4",bag)
-
+    a=bag[3].getValue()
+    player1=Player(distribution(bag))
+    player2=Player(distribution(bag))
+    """ #pour afficher les mains en test
+    j11=[]
+    j22=[]
+    for i in range(len(bag)):
+        if i<len(j1):
+            j11.append(j1[i].getValue())
+            j22.append(j2[i].getValue())
+        bag[i] = bag[i].getValue()
+"""
 
 def bag_dominos():
+    count= 0
     pioche_obj = []
     liste_coo=[]
     for i in range(7):
         for j in range(i + 1):
-            pioche_obj.append(Domino([j,i]))
-            liste_coo.append(pioche_obj[j].getValue())
-    print(pioche_obj)
-
-
+            pioche_obj.append(Domino((j,i)))
+            liste_coo.append(pioche_obj[count].getValue())
+            count=count+1
     return pioche_obj
 
 def piocher(bag):
-    piece = random.sample(bag, 1) #pioche un domino random dans le sac
-    index=bag.index(piece.getValue())
+    piece = random.choice(bag) #pioche un domino random dans le sac
+    index=bag.index(piece)
     bag.pop(index)
     return piece
 

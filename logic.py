@@ -34,12 +34,18 @@ def game(player1,player2):
         round(player1)
         round(player2)
 
-def round(player):
+def round(player,board):
+    displayBoard(board)
+    displayHand(player.getHand())
     number=int(input("quel domino voulez vous jouer?"))
     rotation=int(input("voulez vous le faire pivoter?\n1 : pour le tourner\n2: pour le laisser dans le même sens"))
     emplacement=int(input("où voulez vous jouer votre domino?\nO pour le jouer à gauche\nE pour le jouer à droite\n"))
     if rotation==1:
-        player.getValue[number].reverse()
+        player.getHand()[number].reverse()
+    if emplacement==0 and board[0].getValue()[0] == player.getHand()[number].getValue()[1]:
+        a=1#deplacer tout le tableau vers la droite et placer le domino a gauche
+    if emplacement == 1 and board[len(board)-1].getValue()[1] == player.getHand()[number].getValue()[0]:
+        a=1#dajouter la piece a droite
 
 
 """ #pour afficher les mains en test 

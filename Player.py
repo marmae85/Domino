@@ -24,3 +24,9 @@ class Player:
         for i in range(len(self.hand)):
             if self.hand.getValue() == value:
                 self.hand.pop(i)
+
+    def setUsername(self, username):
+        self.username = username
+
+    def getUsername(self):
+        return self.username

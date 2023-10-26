@@ -1,13 +1,21 @@
 import random
 from Domino import Domino
+from Player import Player
 
-def jeu(player1,player2):
+def init(name1,name2):
     #Début du jeu
     bag=bag_dominos()
     a=bag[3].getValue()
     player1=Player(distribution(bag))
+    player1.setUsername(name1)
     player2=Player(distribution(bag))
-    """ #pour afficher les mains en test
+    player2.setUsername(name2)
+
+
+def partie():
+    while ()
+
+""" #pour afficher les mains en test
     j11=[]
     j22=[]
     for i in range(len(bag)):

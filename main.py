@@ -6,10 +6,14 @@ import random
 from logic import jeu
 #from Display import displayMenu
 def main():
-    jeu()
+    name1 = str(input("quel est le nom du joueur 1 ?"))
+    name2 = str(input("quel est le nom du joueur 2 ?"))
+    init(name1, name2)
     """choix=displayMenu()
     if choix==1:
-        jeu()
+        name1=str(input("quel est le nom du joueur 1?)
+        name2=str(input("quel est le nom du joueur 2?)
+        jeu(name1,name2)
     elif choix== 2 :
         "charger"
     elif choix == 3:

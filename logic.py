@@ -12,11 +12,34 @@ def init(name1,name2):
     player2.setUsername(name2)
 
 
-def partie():
+def game():
     fin_partie=False
-    joueur1
-    while (not fin_partie):
+    max1=player1.getMax()
+    max2=player2.getMax()
 
+    if max2 > max1:
+        round(player2)
+    elif max2 < max1:
+        round(player2)
+
+    elif max2 == max1:          #cas d'égalité
+        min1=player1.getMin()
+        min2=player2.getMin()
+        if min1 > min2:
+            round(player2)
+        elif min1 < min2:
+            round(player1)
+
+    while (not fin_partie):
+        round(player1)
+        round(player2)
+
+def round(player):
+    number=int(input("quel domino voulez vous jouer?"))
+    rotation=int(input("voulez vous le faire pivoter?\n1 : pour le tourner\n2: pour le laisser dans le même sens"))
+    emplacement=int(input("où voulez vous jouer votre domino?\nO pour le jouer à gauche\nE pour le jouer à droite\n"))
+    if rotation==1:
+        player.getValue[number].reverse()
 
 
 """ #pour afficher les mains en test

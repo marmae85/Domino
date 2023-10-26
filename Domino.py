@@ -51,4 +51,8 @@ class Domino :
             self.affichage = ["|", v2, "|", v1, "|"]
             self.affichage = "".join(self.affichage)
 
+    def reverse(self):
+        rev=self.value[0]
+        self.value[0]= self.value[1]
+        self.value[1]= rev
 

@@ -33,8 +33,7 @@ class Player:
             v2, v3 = self.hand[i].getValue()
             if(v0 == v2 and v1 == v3) or (v0 == v3 and v1 == v2):
                 self.hand.pop(i)
-                printPos(100,50,str(len(self.hand)))
-                os.system("pause")
+                break
 
     def setUsername(self, username):
         self.username = username

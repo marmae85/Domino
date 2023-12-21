@@ -46,14 +46,13 @@ def game(player1,player2):
         print(fin_partie)
 
 def round(player,board,start):
-
+    left=0
     right = 0
     clr()
     emplacement_bon=False
     if (start == False):
         displayBoard(board)
         player.getHand()[number].getValue()
-    start==False?left =
     while (emplacement_bon == False):
 
         displayHand(player.getHand(),left,right)

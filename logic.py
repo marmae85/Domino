@@ -48,18 +48,18 @@ def game(player1,player2):
 def round(player,board,start):
 
     clr()
+    tab_extrem = [0,0]
     emplacement_bon=False
     if (start == False):
         displayBoard(board)
-        tab_extrem[0] =  board[0].getValue()[0]
-        tab_extrem[1] = board[len(board)-1].getValue()[1]
-    else:
-        tab_extrem=[list(range(1,7))]
-        print(tab_extrem)
+        tab_extrem[0], trs = board[0].getValue()
+        trs, tab_extrem[1] = board[len(board)-1].getValue()
 
     while (emplacement_bon == False):
-
-        displayHand(player.getHand(),tab_extrem)
+        if start:
+            displayHand(player.getHand(),list(range(7)))
+        else:
+            displayHand(player.getHand(),tab_extrem)
         number=int(input("\njoueur "+str(player.getUsername())+" quel domino voulez vous jouer?"))
 
         while number<0 or number>6:

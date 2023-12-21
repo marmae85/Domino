@@ -3,8 +3,10 @@ import os
 from Domino import Domino
 def clr():
     print("\033[2J")
+
 def pos(x,y):
     print("\033["+str(y)+";"+str(x)+"H", end="")
+
 def printPos(x, y, text):
     print("\033["+str(y)+";"+str(x)+"H"+text)
 
@@ -32,7 +34,7 @@ def displayMenu():
                 f"          |                  ||                  ||                  ||                  ||                  ||                  |\n"
                 f"           '------------------------------------'  '------------------------------------'  '------------------------------------'")
             if error:
-                pos(25,12)
+                pos(25,27)
                 print("La valeur saisie ne fonctionne pas")
             printPos(30,20,"1. Jouer")
             printPos(30,21,"2. Charger une partie")
@@ -58,15 +60,23 @@ def displayBoard(boardList):
             printPos(50+(6*i), 15,"["+str(v1) +"|"+str(v2)+"]")
 
 
-def displayHand(hand,left,right):
+def displayHand(hand, extrems):
+    count = 0
+    index = []
     for i in range(len(hand)):
         (v1, v2) = hand[i].getValue()
-        esp = int(50/len(hand))
-        printPos(50 + esp*i, 30-1, "[" + str(v1) + "|" + str(v2) + "]")
-        printPos(52 + esp*i, 30, str(i))
+        if v1 in extrems or v2 in extrems:
+            count += 1
+            index.append(i)
+    for i in range(len(index)):
+        (v1, v2) = hand[index[i]].getValue()
+        esp = int(50 / count)
+        printPos(50 + esp * i, 30 - 1, "[" + str(v1) + "|" + str(v2) + "]")
+        printPos(52 + esp * i, 30, str(index[i]))
 
 def displayRules():
     clr()
+    pos(0,5)
     print(f"Les dominos est un jeu dans lequel plusieurs joueurs s'affrontent. Le but est de terminer sa main le plus rapidement possible.\n"
           f"Pour poser un domino, une de ses valeurs doit correspondre à celle la plus à gauche ou la plus à droite du plateau. Si aucun domino ne peut être posé,\nle joueur pioche."
           f"Le joueur qui possède le domino dont la somme est la plus haute commence. Si les 2 joueurs ont la même somme,\nc'est celui qui a la plus petite qui commence")

@@ -32,25 +32,6 @@ class Domino :
         self.setAffichage(self.direction)
         return self.affichage
 
-    def setAffichage(self,dir):
-        v1=str(self.value[0])
-        v2=str(self.value[1])
-        if self.direction == "N":
-            self.affichage = ["|", v1, "|\n|", v2, "|"]
-            self.affichage = "".join(self.affichage)
-
-        elif self.direction == "S":
-            self.affichage = ["|", v2, "|\n|", v3, "|"]
-            self.affichage = "".join(self.affichage)
-
-        elif self.direction == "E":
-            self.affichage = ["|", v1, "|", v2, "|"]
-            self.affichage = "".join(self.affichage)
-
-        elif self.direction == "N":
-            self.affichage = ["|", v2, "|", v1, "|"]
-            self.affichage = "".join(self.affichage)
-
     def reverse(self):
         self.value = (self.value[1], self.value[0])
         #rev=self.value[0]

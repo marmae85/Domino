@@ -31,12 +31,12 @@ def game(player1,player2):
         min1=player1.getMin()
         min2=player2.getMin()
         if min1 > min2:
-            print("le joueur 1 commence")
+            printPos(50,30,"le joueur 1 commence")
             round(player2,board,start)
             start = False
 
         elif min1 < min2:
-            print("le joueur 2 commence")
+            printPos(50,30,"le joueur 2 commence")
 
     while (not fin_partie):
         round(player1,board,start)
@@ -47,36 +47,52 @@ def game(player1,player2):
 
 def round(player,board,start):
     clr()
+    emplacement_bon=False
     if (start == False):
         displayBoard(board)
 
-    displayHand(player.getHand())
-    number=int(input("\njoueur "+str(player.getUsername())+" quel domino voulez vous jouer?"))
-    while number<0 or number>6:
-        print("Erreur : Veuillez entrer une valeur valide entr 0 et 6")
-        number = int(input("\nOù voulez-vous jouer votre domino?\nG pour le jouer à gauche\nD pour le jouer à droite\n"))
+    while (emplacement_bon == False):
+        displayHand(player.getHand())
+        number=int(input("\njoueur "+str(player.getUsername())+" quel domino voulez vous jouer?"))
+        while number<0 or number>6:
+            print("Erreur : Veuillez entrer une valeur valide entr 0 et 6")
+            number = int(input("\nOù voulez-vous jouer votre domino?\nG pour le jouer à gauche\nD pour le jouer à droite\n"))
 
-    rotation=int(input("\nvoulez vous le faire pivoter?\n1 : pour le tourner\n2: pour le laisser dans le même sens"))
+        print(player.getHand()[number].getValue())
 
-    if rotation == 1:
-        player.getHand()[number].reverse()
+        rotation=int(input("\nvoulez vous le faire pivoter?\n1 : pour le tourner\n2: pour le laisser dans le même sens"))
+        if rotation == 1:
+            player.getHand()[number].reverse()
+            printPos(50, 30, str(player.getHand()[number].getValue()))
+        elif rotation==2:
+            printPos(50, 30, str(Player.getHand()[number].getValue()))
 
-    if (start == False):#si on commence, l'emplacement n'importe pas, on ne rentre donc pas dans la boucle
-        emplacement=str(input("\noù voulez vous jouer votre domino?\nG pour le jouer à gauche\nD pour le jouer à droite\n"))
-        while emplacement not in ['G', 'g', 'D', 'd']:
-            print("Erreur : Veuillez entrer une valeur valide (G, g, D, d)")
-            emplacement = input("\nOù voulez-vous jouer votre domino?\nG pour le jouer à gauche\nD pour le jouer à droite\n")
+        if (start == False):#si on commence, l'emplacement n'importe pas, on ne rentre donc pas dans la boucle
+            emplacement=str(input("\noù voulez vous jouer votre domino?\nG pour le jouer à gauche\nD pour le jouer à droite\n"))
 
-        if (emplacement=='G' or emplacement == 'g') and board[0].getValue()[0] == player.getHand()[number].getValue()[1]:
-            #deplacer tout le tableau vers la droite et placer le domino a gauche
-            board.append(player.getHand()[number])  # ajoute la piece a droite
-            for k in range (len(board)-1,0,-1):
-                board[k],board[k-1] = board[k-1],board[k]
-            player.useDomino(player.getHand()[number].getValue())
+            while emplacement not in ['G', 'g', 'D', 'd']:
+                printPos("Erreur : Veuillez entrer une valeur valide (G, g, D, d)")
+                emplacement = input("\nOù voulez-vous jouer votre domino?\nG pour le jouer à gauche\nD pour le jouer à droite\n")
 
-        if (emplacement == 'D' or emplacement == 'd') and board[len(board)-1].getValue()[1] == player.getHand()[number].getValue()[0]:
-            board.append(player.getHand()[number])#ajoute la piece a droite
-            player.useDomino(player.getHand()[number].getValue())
+            #print(player.getHand()[number].getValue(), board[0].getValue()[0],board[len(board)-1].getValue()[1])
+            if (emplacement=='G' or emplacement == 'g') and board[0].getValue()[0] == player.getHand()[number].getValue()[1]:
+                #deplacer tout le tableau vers la droite et placer le domino a gauche
+                board.append(player.getHand()[number])  # ajoute la piece a droite
+                for k in range (len(board)-1,0,-1):
+                    board[k],board[k-1] = board[k-1],board[k]
+                player.useDomino(player.getHand()[number].getValue())
+                emplacement_bon=True
+
+            elif (emplacement == 'D' or emplacement == 'd') and board[len(board)-1].getValue()[1] == player.getHand()[number].getValue()[0]:
+                board.append(player.getHand()[number])#ajoute la piece a droite
+                player.useDomino(player.getHand()[number].getValue())
+                emplacement_bon=True
+
+            else :
+                printPos(50,30,"l'emplacement n'est pas valable")
+                emplacement = str(input("\nOù voulez-vous jouer votre domino?\nG pour le jouer à gauche\nD pour le jouer à droite\n"))
+        else:
+            emplacement_bon =True #dans le cas du start, l'emplacement est oblligatoirement bon
 
     else:
         board.append(player.getHand()[number])  # ajoute la piece sans vérification étant donné que le plateau est vide
@@ -105,6 +121,7 @@ def bag_dominos():
             pioche_obj.append(Domino((j,i)))
             liste_coo.append(pioche_obj[count].getValue())
             count=count+1
+
     return pioche_obj
 
 def piocher(bag):

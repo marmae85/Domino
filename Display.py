@@ -58,7 +58,7 @@ def displayBoard(boardList):
             printPos(50+(6*i), 15,"["+str(v1) +"|"+str(v2)+"]")
 
 
-def displayHand(hand):
+def displayHand(hand,left,right):
     for i in range(len(hand)):
         (v1, v2) = hand[i].getValue()
         esp = int(50/len(hand))

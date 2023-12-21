@@ -18,15 +18,27 @@ def displayMenu():
     while 1:
         try:
             clr()
+            pos(10, 0)
+            print(
+                f" .------------------------------------.  .------------------------------------.  .-------------------------------------.\n"
+                f"          |                  ||                  ||                  ||                  ||                  ||                  |\n"
+                f"          |    ________      ||       ____       ||   ____    ____   ||       _____      ||   ____  _____    ||       ____       |\n"
+                f"          |   |_   ___ `.    ||     .'    `.     ||  |_   \  /   _|  ||      |_   _|     ||  |_   \|_   _|   ||     .'    `.     |\n"
+                f"          |     | |   `. \   ||    /  .--.  \    ||    |   \/   |    ||        | |       ||    |   \ | |     ||    /  .--.  \    |\n"
+                f"          |     | |    | |   ||    | |    | |    ||    | |\  /| |    ||        | |       ||    | |\ \| |     ||    | |    | |    |\n"
+                f"          |    _| |___.' /   ||    \  `--'  /    ||   _| |_\/_| |_   ||       _| |_      ||   _| |_\   |_    ||    \  `--'  /    |\n"
+                f"          |   |________.'    ||     `.____.'     ||  |_____||_____|  ||      |_____|     ||  |_____|\____|   ||     `.____.'     |\n"
+                f"          |                  ||                  ||                  ||                  ||                  ||                  |\n"
+                f"          |                  ||                  ||                  ||                  ||                  ||                  |\n"
+                f"           '------------------------------------'  '------------------------------------'  '------------------------------------'")
             if error:
                 pos(25,12)
                 print("La valeur saisie ne fonctionne pas")
-            printPos(50, 2,"DOMINO")
-            printPos(30,4,"1. Jouer")
-            printPos(30,5,"2. Charger une partie")
-            printPos(30,6,"3. Règles")
-            printPos(30,7,"4. Quitter")
-            pos(25,10)
+            printPos(30,20,"1. Jouer")
+            printPos(30,21,"2. Charger une partie")
+            printPos(30,22,"3. Règles")
+            printPos(30,23,"4. Quitter")
+            pos(25,26)
             toReturn = int(input("Que voulez-vous faire ? : "))
             if 0 < toReturn <= 4:
                 break
@@ -50,8 +62,8 @@ def displayHand(hand):
     for i in range(len(hand)):
         (v1, v2) = hand[i].getValue()
         esp = int(50/len(hand))
-        #print(esp)
-        printPos(50 + esp*i, 30-1, "[" + str(v2) + "|" + str(v1) + "]")
+        printPos(50 + esp*i, 30-1, "[" + str(v1) + "|" + str(v2) + "]")
+        printPos(52 + esp*i, 30, str(i))
 
 def displayRules():
     clr()

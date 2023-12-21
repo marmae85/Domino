@@ -18,7 +18,7 @@ def game(player1,player2):
     fin_partie=False
     max1=player1.getMax()
     max2=player2.getMax()
-    board = [Domino((0,0))]
+    board = []
 
     if max2 > max1:# si le joueur 2 à le plus grand il commence directement
         round(player2,board,start)
@@ -58,7 +58,8 @@ def round(player,board,start):
 
     if rotation == 1:
         player.getHand()[number].reverse()
-    if (start == False):#si on commence, l'emplacement n'importe pas
+
+    if (start == False):#si on commence, l'emplacement n'importe pas, on ne rentre donc pas dans la boucle
         emplacement=str(input("\noù voulez vous jouer votre domino?\nG pour le jouer à gauche\nD pour le jouer à droite\n"))
         while emplacement not in ['G', 'g', 'D', 'd']:
             print("Erreur : Veuillez entrer une valeur valide (G, g, D, d)")
@@ -74,6 +75,12 @@ def round(player,board,start):
         if (emplacement == 'D' or emplacement == 'd') and board[len(board)-1].getValue()[1] == player.getHand()[number].getValue()[0]:
             board.append(player.getHand()[number])#ajoute la piece a droite
             player.useDomino(player.getHand()[number].getValue())
+
+    else:
+        board.append(player.getHand()[number])  # ajoute la piece sans vérification étant donné que le plateau est vide
+        player.useDomino(player.getHand()[number].getValue())
+
+
 
 
 

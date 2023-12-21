@@ -46,22 +46,26 @@ def game(player1,player2):
         print(fin_partie)
 
 def round(player,board,start):
-    left = 0
-    right= 0
+
     clr()
     emplacement_bon=False
     if (start == False):
         displayBoard(board)
-        left =  board[0].getValue()[0]
-        right = board[len(board)-1].getValue()[1]
+        tab_extrem[0] =  board[0].getValue()[0]
+        tab_extrem[1] = board[len(board)-1].getValue()[1]
+    else:
+        tab_extrem=[list(range(1,7))]
+        print(tab_extrem)
 
     while (emplacement_bon == False):
 
-        displayHand(player.getHand(),left,right)
+        displayHand(player.getHand(),tab_extrem)
         number=int(input("\njoueur "+str(player.getUsername())+" quel domino voulez vous jouer?"))
+
         while number<0 or number>6:
             print("Erreur : Veuillez entrer une valeur valide entr 0 et 6")
             number = int(input("\nOù voulez-vous jouer votre domino?\nG pour le jouer à gauche\nD pour le jouer à droite\n"))
+
 
         print(player.getHand()[number].getValue())
 

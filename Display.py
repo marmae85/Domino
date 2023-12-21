@@ -58,13 +58,13 @@ def displayBoard(boardList):
     for i in range(len(boardList)):
         seq += str(boardList[i].getDirection())
         if boardList[i].getDirection() == 0:
-            curr_y += 4
+            curr_y += 2
         if boardList[i].getDirection() == 1:
-            curr_x += 6
+            curr_x -= 3
         if boardList[i].getDirection() == 2:
-            curr_y -= 4
+            curr_y -= 2
         if boardList[i].getDirection() == 3:
-            curr_x -= 6
+            curr_x += 3
     for i in range(len(seq)):
         #os.system("pause")
         (v1, v2) = boardList[i].getValue()

@@ -71,8 +71,8 @@ def displayHand(hand, extrems):
     for i in range(len(index)):
         (v1, v2) = hand[index[i]].getValue()
         esp = int(50 / count)
-        printPos(50 + esp * i, 30 - 1, "[" + str(v1) + "|" + str(v2) + "]")
-        printPos(52 + esp * i, 30, str(index[i]))
+        printPos(50 + esp * i, 20 - 1, "[" + str(v1) + "|" + str(v2) + "]")
+        printPos(52 + esp * i, 20, str(index[i]))
 
 def displayRules():
     clr()

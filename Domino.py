@@ -52,7 +52,8 @@ class Domino :
             self.affichage = "".join(self.affichage)
 
     def reverse(self):
-        rev=self.value[0]
-        self.value[0]= self.value[1]
-        self.value[1]= rev
+        self.value = (self.value[1], self.value[0])
+        #rev=self.value[0]
+        #self.value[0]= self.value[1]
+        #self.value[1]= rev
 

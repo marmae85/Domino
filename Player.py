@@ -1,8 +1,11 @@
 from Domino import Domino
 
 class Player:
-    def __init__(self, hand):
+
+
+    def __init__(self, hand,username):
         self.hand = hand
+        self.username = username
 
     def getMin(self):
         min = 13
@@ -21,8 +24,8 @@ class Player:
                 max = currentvalue
         return max
     def useDomino(self, value):
-        for i in range(len(self.hand)):
-            if self.hand.getValue() == value:
+        for i in range(len(self.hand)-1):
+            if self.hand[i].getValue() == value:
                 self.hand.pop(i)
 
     def setUsername(self, username):
@@ -30,3 +33,6 @@ class Player:
 
     def getUsername(self):
         return self.username
+
+    def getHand(self):
+        return self.hand

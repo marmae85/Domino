@@ -1,51 +1,80 @@
 import random
 from Domino import Domino
 from Player import Player
+from Display import *
+
+
 
 def init(name1,name2):
     #Début du jeu
     bag=bag_dominos()
     a=bag[3].getValue()
-    player1=Player(distribution(bag))
-    player1.setUsername(name1)
-    player2=Player(distribution(bag))
-    player2.setUsername(name2)
+    player1=Player(distribution(bag),name1)
+    player2=Player(distribution(bag),name2)
     return (player1,player2)
 
 def game(player1,player2):
+    start= True
     fin_partie=False
     max1=player1.getMax()
     max2=player2.getMax()
+    board = [Domino((0,0))]
 
-    if max2 > max1:
-        round(player2)
-    elif max2 < max1:
-        round(player2)
+    if max2 > max1:# si le joueur 2 à le plus grand il commence directement
+        round(player2,board,start)
+        start = False
+    elif max2 < max1:#sinon on rentre dans le while en fin de fonction et J1 commence
+        print("le joueur 2 commence")
 
     elif max2 == max1:          #cas d'égalité
         min1=player1.getMin()
         min2=player2.getMin()
         if min1 > min2:
-            round(player2)
+            print("le joueur 1 commence")
+            round(player2,board,start)
+            start = False
+
         elif min1 < min2:
-            round(player1)
+            print("le joueur 2 commence")
 
     while (not fin_partie):
-        round(player1)
-        round(player2)
+        round(player1,board,start)
+        if start == True:
+            start=False
+        round(player2,board,start)
+        print(fin_partie)
 
-def round(player,board):
-    displayBoard(board)
+def round(player,board,start):
+    if (start == False):
+        displayBoard(board)
+
     displayHand(player.getHand())
-    number=int(input("quel domino voulez vous jouer?"))
-    rotation=int(input("voulez vous le faire pivoter?\n1 : pour le tourner\n2: pour le laisser dans le même sens"))
-    emplacement=int(input("où voulez vous jouer votre domino?\nO pour le jouer à gauche\nE pour le jouer à droite\n"))
-    if rotation==1:
+    number=int(input("\njoueur "+str(player.getUsername())+" quel domino voulez vous jouer?"))
+    while number<0 or number>6:
+        print("Erreur : Veuillez entrer une valeur valide entr 0 et 6")
+        number = int(input("\nOù voulez-vous jouer votre domino?\nG pour le jouer à gauche\nD pour le jouer à droite\n"))
+
+    rotation=int(input("\nvoulez vous le faire pivoter?\n1 : pour le tourner\n2: pour le laisser dans le même sens"))
+
+    if rotation == 1:
         player.getHand()[number].reverse()
-    if emplacement==0 and board[0].getValue()[0] == player.getHand()[number].getValue()[1]:
-        a=1#deplacer tout le tableau vers la droite et placer le domino a gauche
-    if emplacement == 1 and board[len(board)-1].getValue()[1] == player.getHand()[number].getValue()[0]:
-        a=1#dajouter la piece a droite
+    if (start == False):#si on commence, l'emplacement n'importe pas
+        emplacement=str(input("\noù voulez vous jouer votre domino?\nG pour le jouer à gauche\nD pour le jouer à droite\n"))
+        while emplacement not in ['G', 'g', 'D', 'd']:
+            print("Erreur : Veuillez entrer une valeur valide (G, g, D, d)")
+            emplacement = input("\nOù voulez-vous jouer votre domino?\nG pour le jouer à gauche\nD pour le jouer à droite\n")
+
+        if (emplacement=='G' or emplacement == 'g'):# and board[0].getValue()[0] == player.getHand()[number].getValue()[1]:
+            #deplacer tout le tableau vers la droite et placer le domino a gauche
+            board.append(player.getHand()[number])  # ajoute la piece a droite
+            for k in range (len(board)-1,0,-1):
+                board[k],board[k-1] = board[k-1],board[k]
+            player.useDomino(player.getHand()[number].getValue())
+
+        if (emplacement == 'D' or emplacement == 'd') and board[len(board)-1].getValue()[1] == player.getHand()[number].getValue()[0]:
+            board.append(player.getHand()[number])#ajoute la piece a droite
+            player.useDomino(player.getHand()[number].getValue())
+
 
 
 """ #pour afficher les mains en test 
@@ -94,11 +123,5 @@ def supression_bag(hand):
 supression_bag(hand)
 print("après distribution", bag)
 """
-
-
-
-
-
-
 
 

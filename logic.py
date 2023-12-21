@@ -14,6 +14,7 @@ def init(name1,name2):
     return (player1,player2)
 
 def game(player1,player2):
+    clr()
     start= True
     fin_partie=False
     max1=player1.getMax()
@@ -45,6 +46,7 @@ def game(player1,player2):
         print(fin_partie)
 
 def round(player,board,start):
+    clr()
     if (start == False):
         displayBoard(board)
 

@@ -68,11 +68,23 @@ def displayHand(hand, extrems):
         if v1 in extrems or v2 in extrems:
             count += 1
             index.append(i)
-    for i in range(len(index)):
-        (v1, v2) = hand[index[i]].getValue()
-        esp = int(50 / count)
-        printPos(50 + esp * i, 20 - 1, "[" + str(v1) + "|" + str(v2) + "]")
-        printPos(52 + esp * i, 20, str(index[i]))
+    count2 = 0
+    count3 = 0
+    for i in range(len(hand)):
+        (v1, v2) = hand[i].getValue()
+        if i in index:
+            esp1 = int(50 / count)
+            printPos(30,20-1, "Main jouable")
+            printPos(50 + esp1 * (i-count3), 20 - 1, "[" + str(v1) + "|" + str(v2) + "]")
+            printPos(52 + esp1 * (i-count3), 20, str(i+1))
+            count2 += 1
+        else:
+            esp2 = int(50 / (len(hand)-count))
+            printPos(30,23-1, "Dominos implaçables")
+            printPos(50 + esp2 * (i-count2), 23 - 1, "[" + str(v1) + "|" + str(v2) + "]")
+            printPos(52 + esp2 * (i-count2), 23, str(i+1))
+            count3 += 1
+
 
 def displayRules():
     clr()

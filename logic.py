@@ -1,3 +1,4 @@
+import os
 import random
 from Domino import Domino
 from Player import Player
@@ -40,13 +41,29 @@ def game(player1,player2,pioche):
 
     while (not fin_partie):
         round(player1,board,start,pioche)
+        if len(player1.getHand()) == 0:
+            print(f"{player1.getUsername} a gagné")
+            break
+        elif len(player2.getHand()) == 0:
+            print(f"{player2.getUsername} a gagné")
+            break
         if start == True:
             start=False
         round(player2,board,start,pioche)
         print(fin_partie)
+        if len(player1.getHand()) == 0:
+            print(f"{player1.getUsername} a gagné")
+            break
+        elif len(player2.getHand()) == 0:
+            print(f"{player2.getUsername} a gagné")
+            break
+    clr()
+    os.system("pause")
+    exit(0)
+
 
 def round(player,board,start,pioche):
-
+    number = -1
     clr()
     tab_extrem = [0,0]
     emplacement_bon=False
@@ -60,26 +77,49 @@ def round(player,board,start,pioche):
             displayHand(player.getHand(),list(range(7)))
         else:
             displayHand(player.getHand(),tab_extrem)
-
-        number=int(input("\njoueur "+str(player.getUsername())+" quel domino voulez vous jouer? entrez 0 pour piocher. Il reste"+str(len(pioche))+" domino dans la pioche"))
-        if number==0:
+        while number>len(player.getHand()) or number < 0:
+            try:
+                pos(0, 32)
+                number=int(input("\nJoueur "+str(player.getUsername())+", quel domino voulez vous jouer? Entrez 0 pour piocher. Il reste "+str(len(pioche))+" dominos dans la pioche : "))
+            except ValueError as e:
+                printPos(0,30, "La valeur saisie n'est pas conforme")
+        if number == 0:
             if len(pioche)>0:
-                player.addDomino(pioche.pop(0))
+                player.addDomino(piocher(pioche))
+                clr()
+                displayBoard(board)
+                if start:
+                    displayHand(player.getHand(), list(range(7)))
+                else:
+                    displayHand(player.getHand(), tab_extrem)
+                os.system("pause")
+                emplacement_bon = True
             else:
                 printPos(120,40,"la pioche est vide")
 
         else:
             number = number - 1
-            while number<0 or number>len(player.getHand())-1:
-                print(60,30,"Erreur : Veuillez entrer une valeur valide")
+            # while number<0 or number>len(player.getHand())-1:
+            #     print(60,30,"Erreur : Veuillez entrer une valeur valide")
+            #
+            #     pos(60,30)
+            #     number = int(input("\nOù voulez-vous jouer votre domino?\nG pour le jouer à gauche\nD pour le jouer à droite\n"))
 
-                pos(60,30)
-                number = int(input("\nOù voulez-vous jouer votre domino?\nG pour le jouer à gauche\nD pour le jouer à droite\n"))
 
-
-            print(player.getHand()[number].getValue())
-            pos(60, 32)
-            rotation=int(input("\nvoulez vous le faire pivoter?\n1 : pour le tourner\n2: pour le laisser dans le même sens"))
+            #print(player.getHand()[number].getValue())
+            clr()
+            displayBoard(board)
+            if start:
+                displayHand(player.getHand(),list(range(7)))
+            else:
+                displayHand(player.getHand(),tab_extrem)
+            rotation = 0
+            while rotation != 1 and rotation !=2:
+                try:
+                    pos(60, 32)
+                    rotation=int(input("\nVoulez vous le faire pivoter?\n1 : Oui\n2 : Non\n"))
+                except Exception as e:
+                    pass
             if rotation == 1:
                 player.getHand()[number].reverse()
                 printPos(50, 30, str(player.getHand()[number].getValue()))
@@ -87,12 +127,25 @@ def round(player,board,start,pioche):
                 printPos(50, 30, str(player.getHand()[number].getValue()))
 
             if (start == False):#si on commence, l'emplacement n'importe pas, on ne rentre donc pas dans la boucle
-                emplacement=str(input("\noù voulez vous jouer votre domino?\nG pour le jouer à gauche\nD pour le jouer à droite\n"))
+                clr()
+                displayBoard(board)
+                if start:
+                    displayHand(player.getHand(), list(range(7)))
+                else:
+                    displayHand(player.getHand(), tab_extrem)
+                pos(50, 30)
+                emplacement=input("\nOù voulez vous jouer votre domino?\nG pour le jouer à gauche\nD pour le jouer à droite\n")
 
                 while emplacement not in ['G', 'g', 'D', 'd']:
+                    clr()
+                    displayBoard(board)
+                    if start:
+                        displayHand(player.getHand(), list(range(7)))
+                    else:
+                        displayHand(player.getHand(), tab_extrem)
                     printPos(50,30,"Erreur : Veuillez entrer une valeur valide (G, g, D, d)")
                     pos(50,30)
-                    emplacement = int(input("\nOù voulez-vous jouer votre domino?\nG pour le jouer à gauche\nD pour le jouer à droite\n"))
+                    emplacement = input("\nOù voulez-vous jouer votre domino?\nG pour le jouer à gauche\nD pour le jouer à droite\n")
 
                 #print(player.getHand()[number].getValue(), board[0].getValue()[0],board[len(board)-1].getValue()[1])
                 if (emplacement=='G' or emplacement == 'g') and board[0].getValue()[0] == player.getHand()[number].getValue()[1]:
@@ -108,10 +161,10 @@ def round(player,board,start,pioche):
                     player.useDomino(player.getHand()[number].getValue())
                     emplacement_bon=True
 
-                else :
-                    printPos(50,30,"l'emplacement n'est pas valable")
-                    pos(50,30)
-                    emplacement = str(input("\nOù voulez-vous jouer votre domino?\nG pour le jouer à gauche\nD pour le jouer à droite\n"))
+                #else :
+                #    printPos(50,30,"l'emplacement n'est pas valable")
+                #    pos(50,30)
+                #    emplacement = str(input("\nOù voulez-vous jouer votre domino?\nG pour le jouer à gauche\nD pour le jouer à droite\n"))
 
             else:
                 board.append(player.getHand()[number])  # ajoute la piece sans vérification étant donné que le plateau est vide
@@ -138,7 +191,7 @@ def bag_dominos():
     count= 0
     pioche_obj = []
     liste_coo=[]
-    for i in range(3):
+    for i in range(7):
         for j in range(i + 1):
             pioche_obj.append(Domino((j,i)))
             liste_coo.append(pioche_obj[count].getValue())
@@ -154,7 +207,7 @@ def piocher(bag):
 
 def distribution(bag):
     hand=[]
-    for i in range(3):
+    for i in range(7):
         domino=piocher(bag)
         hand.append(domino)
     return hand

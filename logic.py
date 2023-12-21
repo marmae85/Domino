@@ -46,13 +46,17 @@ def game(player1,player2):
         print(fin_partie)
 
 def round(player,board,start):
+
+    right = 0
     clr()
     emplacement_bon=False
     if (start == False):
         displayBoard(board)
-
+        player.getHand()[number].getValue()
+    start==False?left =
     while (emplacement_bon == False):
-        displayHand(player.getHand())
+
+        displayHand(player.getHand(),left,right)
         number=int(input("\njoueur "+str(player.getUsername())+" quel domino voulez vous jouer?"))
         while number<0 or number>6:
             print("Erreur : Veuillez entrer une valeur valide entr 0 et 6")

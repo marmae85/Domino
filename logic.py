@@ -21,9 +21,10 @@ def game(player1,player2,pioche):
     max1=player1.getMax()
     max2=player2.getMax()
     board = []
-
+    ori_droite = 1
+    ori_gauche = 3
     if max2 > max1:# si le joueur 2 à le plus grand il commence directement
-        round(player2,board,start,pioche)
+        ori = round(player2,board,start,pioche, ori_gauche, ori_droite)
         start = False
     elif max2 < max1:#sinon on rentre dans le while en fin de fonction et J1 commence
         printPos(60,30,"le joueur 2 commence")
@@ -33,14 +34,14 @@ def game(player1,player2,pioche):
         min2=player2.getMin()
         if min1 > min2:
             printPos(50,30,"le joueur 1 commence")
-            round(player2,board,start,pioche)
+            ori = round(player2, board, start, pioche, ori_gauche, ori_droite)
             start = False
 
         elif min1 < min2:
             printPos(50,30,"le joueur 2 commence")
 
     while (not fin_partie):
-        round(player1,board,start,pioche)
+        ori_gauche, ori_droite = round(player1,board,start,pioche, ori_gauche, ori_droite)
         if len(player1.getHand()) == 0:
             print(f"{player1.getUsername} a gagné")
             break
@@ -49,7 +50,7 @@ def game(player1,player2,pioche):
             break
         if start == True:
             start=False
-        round(player2,board,start,pioche)
+        ori_gauche, ori_droite = round(player2,board,start,pioche, ori_gauche, ori_droite)
         print(fin_partie)
         if len(player1.getHand()) == 0:
             print(f"{player1.getUsername} a gagné")
@@ -62,7 +63,7 @@ def game(player1,player2,pioche):
     exit(0)
 
 
-def round(player,board,start,pioche):
+def round(player,board,start,pioche, ori_gauche, ori_droite):
     number = -1
     clr()
     tab_extrem = [0,0]
@@ -79,10 +80,10 @@ def round(player,board,start,pioche):
             displayHand(player.getHand(),tab_extrem)
         while number>len(player.getHand()) or number < 0:
             try:
-                pos(0, 32)
+                pos(0, 35)
                 number=int(input("\nJoueur "+str(player.getUsername())+", quel domino voulez vous jouer? Entrez 0 pour piocher. Il reste "+str(len(pioche))+" dominos dans la pioche : "))
             except ValueError as e:
-                printPos(0,30, "La valeur saisie n'est pas conforme")
+                printPos(0,37, "La valeur saisie n'est pas conforme")
         if number == 0:
             if len(pioche)>0:
                 player.addDomino(piocher(pioche))
@@ -114,17 +115,18 @@ def round(player,board,start,pioche):
             else:
                 displayHand(player.getHand(),tab_extrem)
             rotation = 0
-            while rotation != 1 and rotation !=2:
+            while rotation != 1 and rotation != 2:
                 try:
-                    pos(60, 32)
+                    pos(60, 35)
                     rotation=int(input("\nVoulez vous le faire pivoter?\n1 : Oui\n2 : Non\n"))
                 except Exception as e:
                     pass
             if rotation == 1:
                 player.getHand()[number].reverse()
-                printPos(50, 30, str(player.getHand()[number].getValue()))
+                #printPos(50, 30, str(player.getHand()[number].getValue()))
             elif rotation==2:
-                printPos(50, 30, str(player.getHand()[number].getValue()))
+                #printPos(50, 30, str(player.getHand()[number].getValue()))
+                pass
 
             if (start == False):#si on commence, l'emplacement n'importe pas, on ne rentre donc pas dans la boucle
                 clr()
@@ -133,7 +135,7 @@ def round(player,board,start,pioche):
                     displayHand(player.getHand(), list(range(7)))
                 else:
                     displayHand(player.getHand(), tab_extrem)
-                pos(50, 30)
+                pos(50, 35)
                 emplacement=input("\nOù voulez vous jouer votre domino?\nG pour le jouer à gauche\nD pour le jouer à droite\n")
 
                 while emplacement not in ['G', 'g', 'D', 'd']:
@@ -143,13 +145,34 @@ def round(player,board,start,pioche):
                         displayHand(player.getHand(), list(range(7)))
                     else:
                         displayHand(player.getHand(), tab_extrem)
-                    printPos(50,30,"Erreur : Veuillez entrer une valeur valide (G, g, D, d)")
-                    pos(50,30)
+                    printPos(50,35,"Erreur : Veuillez entrer une valeur valide (G, g, D, d)")
+                    pos(50,35)
                     emplacement = input("\nOù voulez-vous jouer votre domino?\nG pour le jouer à gauche\nD pour le jouer à droite\n")
+
+                clr()
+                displayBoard(board)
+                if start:
+                    displayHand(player.getHand(), list(range(7)))
+                else:
+                    displayHand(player.getHand(), tab_extrem)
+                pos(0, 35)
+                changeOrientation = input("Voulez-vous changer la direction ? 1 - Oui, une autre touche non")
+                if changeOrientation == "1":
+                    print(f"    0     \n"
+                          f"    ↑     \n"
+                          f"3 ←   → 1 \n"
+                          f"    ↓     \n"
+                          f"    2     ")
+                    new_ori = int(input("Quelle orientation voulez vous ?"))
+                    if (emplacement == 'g' or emplacement == 'G') and (ori_gauche != new_ori or (ori_gauche+2)%4 != new_ori):
+                        ori_gauche = new_ori
+                    elif(emplacement == 'd' or emplacement == 'D') and (ori_droite != new_ori or (ori_droite+2)%4 != new_ori):
+                        ori_droite = new_ori
 
                 #print(player.getHand()[number].getValue(), board[0].getValue()[0],board[len(board)-1].getValue()[1])
                 if (emplacement=='G' or emplacement == 'g') and board[0].getValue()[0] == player.getHand()[number].getValue()[1]:
                     #deplacer tout le tableau vers la droite et placer le domino a gauche
+                    player.getHand()[number].setDirection((ori_gauche+2)%4)
                     board.append(player.getHand()[number])  # ajoute la piece a droite
                     for k in range (len(board)-1,0,-1):
                         board[k],board[k-1] = board[k-1],board[k]
@@ -157,6 +180,7 @@ def round(player,board,start,pioche):
                     emplacement_bon=True
 
                 elif (emplacement == 'D' or emplacement == 'd') and board[len(board)-1].getValue()[1] == player.getHand()[number].getValue()[0]:
+                    player.getHand()[number].setDirection(ori_droite)
                     board.append(player.getHand()[number])#ajoute la piece a droite
                     player.useDomino(player.getHand()[number].getValue())
                     emplacement_bon=True
@@ -170,6 +194,7 @@ def round(player,board,start,pioche):
                 board.append(player.getHand()[number])  # ajoute la piece sans vérification étant donné que le plateau est vide
                 player.useDomino(player.getHand()[number].getValue())
                 emplacement_bon =True #dans le cas du start, l'emplacement est oblligatoirement bon
+    return ori_gauche, ori_droite
 
 
 

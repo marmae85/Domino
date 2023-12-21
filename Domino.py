@@ -8,11 +8,11 @@
 """
 
 class Domino :
-    direction = ""
+    direction = 1
 
     def __init__(self,type):
         self.value = type
-        self.direction="E"
+        self.direction= 1
         self.affichage = [str(self.value[0]), str(self.value[1])]
 
     def setValue(self,value):

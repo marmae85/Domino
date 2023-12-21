@@ -37,14 +37,13 @@ def displayMenu():
     return toReturn
 
 def displayBoard(boardList):
-    #clr()
-    #printPos(80,40,str(len(boardList)))
+    clr()
     for i in range(len(boardList)):
         (v1, v2) = boardList[i].getValue()
-        if boardList[i].getDirection() == "E":
-            printPos(10+(6*i), 30,"["+str(v2) +"|"+str(v1)+"]")
+        if boardList[i].getDirection() == "W":
+            printPos(50+(6*i), 15,"["+str(v2) +"|"+str(v1)+"]")
         else:
-            printPos(10+(6*i), 30,"["+str(v1) +"|"+str(v2)+"]")
+            printPos(50+(6*i), 15,"["+str(v1) +"|"+str(v2)+"]")
 
 
 def displayHand(hand):
@@ -56,7 +55,9 @@ def displayHand(hand):
 
 def displayRules():
     clr()
-    print(f"Les dominos est un jeu dans lequel plusieurs joueurs s'affrontent. Le but est de terminer sa main le plus rapidement possible")
+    print(f"Les dominos est un jeu dans lequel plusieurs joueurs s'affrontent. Le but est de terminer sa main le plus rapidement possible.\n"
+          f"Pour poser un domino, une de ses valeurs doit correspondre à celle la plus à gauche ou la plus à droite du plateau. Si aucun domino ne peut être posé,\nle joueur pioche."
+          f"Le joueur qui possède le domino dont la somme est la plus haute commence. Si les 2 joueurs ont la même somme,\nc'est celui qui a la plus petite qui commence")
     print(f"\n\nAppuyez sur n'importe quelle touche pour revenir au menu...")
     input()
 

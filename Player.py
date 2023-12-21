@@ -1,4 +1,7 @@
+import os
+
 from Domino import Domino
+from Display import pos, printPos
 
 class Player:
 
@@ -24,15 +27,22 @@ class Player:
                 max = currentvalue
         return max
     def useDomino(self, value):
-        for i in range(len(self.hand)-1):
-            if self.hand[i].getValue() == value:
+        v0, v1 = value
+        printPos(100,50,str(value))
+        for i in range(len(self.hand)):
+            v2, v3 = self.hand[i].getValue()
+            if(v0 == v2 and v1 == v3) or (v0 == v3 and v1 == v2):
                 self.hand.pop(i)
+                printPos(100,50,str(len(self.hand)))
+                os.system("pause")
 
     def setUsername(self, username):
         self.username = username
 
     def getUsername(self):
         return self.username
+    def getHand(self):
+        return self.hand
 
     def getHand(self):
         return self.hand

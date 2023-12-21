@@ -65,7 +65,7 @@ def round(player,board,start):
             print("Erreur : Veuillez entrer une valeur valide (G, g, D, d)")
             emplacement = input("\nOù voulez-vous jouer votre domino?\nG pour le jouer à gauche\nD pour le jouer à droite\n")
 
-        if (emplacement=='G' or emplacement == 'g'):# and board[0].getValue()[0] == player.getHand()[number].getValue()[1]:
+        if (emplacement=='G' or emplacement == 'g') and board[0].getValue()[0] == player.getHand()[number].getValue()[1]:
             #deplacer tout le tableau vers la droite et placer le domino a gauche
             board.append(player.getHand()[number])  # ajoute la piece a droite
             for k in range (len(board)-1,0,-1):

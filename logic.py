@@ -46,13 +46,15 @@ def game(player1,player2):
         print(fin_partie)
 
 def round(player,board,start):
-    left=0
-    right = 0
+    left = 0
+    right= 0
     clr()
     emplacement_bon=False
     if (start == False):
         displayBoard(board)
-        player.getHand()[number].getValue()
+        left =  board[0].getValue()[0]
+        right = board[len(board)-1].getValue()[1]
+
     while (emplacement_bon == False):
 
         displayHand(player.getHand(),left,right)
@@ -68,7 +70,7 @@ def round(player,board,start):
             player.getHand()[number].reverse()
             printPos(50, 30, str(player.getHand()[number].getValue()))
         elif rotation==2:
-            printPos(50, 30, str(Player.getHand()[number].getValue()))
+            printPos(50, 30, str(player.getHand()[number].getValue()))
 
         if (start == False):#si on commence, l'emplacement n'importe pas, on ne rentre donc pas dans la boucle
             emplacement=str(input("\noù voulez vous jouer votre domino?\nG pour le jouer à gauche\nD pour le jouer à droite\n"))
@@ -94,12 +96,13 @@ def round(player,board,start):
             else :
                 printPos(50,30,"l'emplacement n'est pas valable")
                 emplacement = str(input("\nOù voulez-vous jouer votre domino?\nG pour le jouer à gauche\nD pour le jouer à droite\n"))
+
         else:
+            board.append(player.getHand()[number])  # ajoute la piece sans vérification étant donné que le plateau est vide
+            player.useDomino(player.getHand()[number].getValue())
             emplacement_bon =True #dans le cas du start, l'emplacement est oblligatoirement bon
 
-    else:
-        board.append(player.getHand()[number])  # ajoute la piece sans vérification étant donné que le plateau est vide
-        player.useDomino(player.getHand()[number].getValue())
+
 
 
 

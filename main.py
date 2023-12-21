@@ -10,8 +10,8 @@ def main():
             name1 = input("Entrez le nom d'un joueur : ")
             pos(5,21)
             name2 = input("Entrez le nom d'un joueur : ")
-            (player1, player2) = init(name1, name2)
-            game(player1, player2)
+            (player1, player2,pioche) = init(name1, name2)
+            game(player1, player2, pioche)
         elif action == 2:
             loadGame()
         elif action == 3:

@@ -45,3 +45,5 @@ class Player:
 
     def getHand(self):
         return self.hand
+    def addDomino(self, domino):
+        self.hand.append(domino)

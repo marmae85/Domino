@@ -1,7 +1,7 @@
 import os
 
 from logic import init, game
-from Display import displayMenu, displayRules, clr, pos
+from Display import displayMenu, displayRules, clr, pos, printPos
 from Save import loadGame
 from Domino import Domino
 from Player import Player
@@ -18,28 +18,33 @@ def main():
             game(player1, player2, pioche)
         elif action == 2:
             elems = loadGame()
-            listMain1 = elems[2].split("+")
-            main1 = []
-            for i in range(len(listMain1)-1):
-                main1.append(dominoString2Domino(listMain1[i]))
-            listMain2 = elems[3].split("+")
-            main2 = []
-            for i in range(len(listMain2)-1):
-                main2.append(dominoString2Domino(listMain2[i]))
-            player1 = Player(main1, elems[0])
-            player2 = Player(main2, elems[1])
-            listPioche = elems[5].split("+")
-            pioche = []
-            for i in range(len(listPioche)-1):
-                pioche.append(dominoString2Domino(listPioche[i]))
-            boardValueDir = elems[4].split("-")
-            board = []
-            for i in range(len(boardValueDir)-1):
-                domino = boardValueDir[i].split("+")[0]
-                dire = int(boardValueDir[i].split("+")[1])
-                board.append(dominoString2Domino(domino))
-                board[i].setDirection(dire)
-            game(player1, player2, pioche, board=board, start=False)
+            if elems:
+                listMain1 = elems[2].split("+")
+                main1 = []
+                for i in range(len(listMain1)-1):
+                    main1.append(dominoString2Domino(listMain1[i]))
+                listMain2 = elems[3].split("+")
+                main2 = []
+                for i in range(len(listMain2)-1):
+                    main2.append(dominoString2Domino(listMain2[i]))
+                player1 = Player(main1, elems[0])
+                player2 = Player(main2, elems[1])
+                listPioche = elems[5].split("+")
+                pioche = []
+                for i in range(len(listPioche)-1):
+                    pioche.append(dominoString2Domino(listPioche[i]))
+                boardValueDir = elems[4].split("-")
+                board = []
+                for i in range(len(boardValueDir)-1):
+                    domino = boardValueDir[i].split("+")[0]
+                    dire = int(boardValueDir[i].split("+")[1])
+                    board.append(dominoString2Domino(domino))
+                    board[i].setDirection(dire)
+                game(player1, player2, pioche, board=board, start=False)
+            else:
+                clr()
+                printPos(30,10, "Il n'y a pas de partie enregistrée")
+                os.system("pause")
         elif action == 3:
             displayRules()
         else:

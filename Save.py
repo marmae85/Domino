@@ -1,4 +1,6 @@
 #format du fichier sauvegarde : nom1, nom2, main1, main2, plateau, pioche
+import os
+
 
 def saveGame(player1, player2, board, pioche):
     save_file = open("savefile", "w")
@@ -25,7 +27,10 @@ def saveGame(player1, player2, board, pioche):
         save_file.write("+")
     save_file.close()
 def loadGame():
-    load_file = open("savefile", "r")
-    data = load_file.read()
-    elems = data.split("/")
-    return elems
+    try:
+        load_file = open("savefile", "r")
+        data = load_file.read()
+        elems = data.split("/")
+        return elems
+    except Exception as e:
+        return None

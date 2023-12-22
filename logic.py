@@ -39,11 +39,7 @@ def game(player1,player2,pioche, board = [], start = True):
             printPos(50,30,"le joueur 2 commence")
 
     while (not fin_partie):
-        clr()
-        pos(50, 25)
-        saveFlag = input("Voulez vous sauvegarder ? 1 - Oui, une autre touche - Non : ")
-        if saveFlag == '1':
-            saveGame(player1, player2, board, pioche)
+        saveGame(player1, player2, board, pioche)
         ori_gauche, ori_droite = round(player1,board,start,pioche, ori_gauche, ori_droite)
         if check_victory(player1, player2, pioche):
             break
@@ -75,7 +71,7 @@ def round(player,board,start,pioche, ori_gauche, ori_droite):
         while number-1 not in playables and number != 0:
             try:
                 pos(0, 35)
-                number=int(input("\nJoueur "+str(player.getUsername())+", quel domino voulez vous jouer? Entrez 0 pour piocher. Il reste "+str(len(pioche))+" dominos dans la pioche : "))
+                number=int(input("\n"+str(player.getUsername())+", quel domino voulez vous jouer? Entrez 0 pour piocher. Il reste "+str(len(pioche))+" dominos dans la pioche : "))
             except ValueError as e:
                 printPos(0,37, "La valeur saisie n'est pas conforme")
         if number == 0:

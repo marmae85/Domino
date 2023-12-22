@@ -1,8 +1,8 @@
 import os
 import random
-from Domino import Domino
 from Player import Player
 from Display import *
+from Save import saveGame
 
 
 
@@ -14,13 +14,11 @@ def init(name1,name2):
     player2=Player(distribution(bag),name2)
     return (player1,player2,bag)
 
-def game(player1,player2,pioche):
+def game(player1,player2,pioche, board = [], start = True):
     clr()
-    start= True
     fin_partie=False
     max1=player1.getMax()
     max2=player2.getMax()
-    board = []
     ori_droite = 1
     ori_gauche = 3
     if max2 > max1:# si le joueur 2 à le plus grand il commence directement
@@ -41,6 +39,11 @@ def game(player1,player2,pioche):
             printPos(50,30,"le joueur 2 commence")
 
     while (not fin_partie):
+        clr()
+        pos(50, 25)
+        saveFlag = input("Voulez vous sauvegarder ? 1 - Oui, une autre touche - Non : ")
+        if saveFlag == '1':
+            saveGame(player1, player2, board, pioche)
         ori_gauche, ori_droite = round(player1,board,start,pioche, ori_gauche, ori_droite)
         if check_victory(player1, player2, pioche):
             break

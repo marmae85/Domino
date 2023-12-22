@@ -5,10 +5,10 @@ from Display import pos, printPos
 
 class Player:
 
-
     def __init__(self, hand,username):
         self.hand = hand
         self.username = username
+        self.canPlay = True
 
     def getMin(self):
         min = 13
@@ -47,3 +47,7 @@ class Player:
         return self.hand
     def addDomino(self, domino):
         self.hand.append(domino)
+    def cantPlay(self):
+        self.canPlay = False
+    def getCanPlay(self):
+        return self.canPlay

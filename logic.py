@@ -42,26 +42,14 @@ def game(player1,player2,pioche):
 
     while (not fin_partie):
         ori_gauche, ori_droite = round(player1,board,start,pioche, ori_gauche, ori_droite)
-        if len(player1.getHand()) == 0:
-            print(f"{player1.getUsername} a gagné")
-            break
-        elif len(player2.getHand()) == 0:
-            print(f"{player2.getUsername} a gagné")
+        if check_victory(player1, player2, pioche):
             break
         if start == True:
             start=False
         ori_gauche, ori_droite = round(player2,board,start,pioche, ori_gauche, ori_droite)
-        print(fin_partie)
-        if len(player1.getHand()) == 0:
-            clr()
-            print(f"{player1.getUsername()} a gagné")
-            break
-        elif len(player2.getHand()) == 0:
-            clr()
-            print(f"{player2.getUsername()} a gagné")
+        if check_victory(player1, player2, pioche):
             break
     os.system("pause")
-    exit(0)
 
 
 def round(player,board,start,pioche, ori_gauche, ori_droite):
@@ -77,9 +65,11 @@ def round(player,board,start,pioche, ori_gauche, ori_droite):
     while (emplacement_bon == False):
         if start:
             displayHand(player.getHand(),list(range(7)))
+            playables = calc_playable(player.getHand(),list(range(7)))
         else:
             displayHand(player.getHand(),tab_extrem)
-        while number>len(player.getHand()) or number < 0:
+            playables = calc_playable(player.getHand(),tab_extrem)
+        while number-1 not in playables and number != 0:
             try:
                 pos(0, 35)
                 number=int(input("\nJoueur "+str(player.getUsername())+", quel domino voulez vous jouer? Entrez 0 pour piocher. Il reste "+str(len(pioche))+" dominos dans la pioche : "))
@@ -99,6 +89,7 @@ def round(player,board,start,pioche, ori_gauche, ori_droite):
                 emplacement_bon = True
             else:
                 printPos(120,40,"la pioche est vide")
+                break
 
         else:
             number = number - 1
@@ -138,9 +129,9 @@ def round(player,board,start,pioche, ori_gauche, ori_droite):
                 else:
                     displayHand(player.getHand(), tab_extrem)
                 pos(50, 35)
-                emplacement=input("\nOù voulez vous jouer votre domino?\nG pour le jouer à gauche\nD pour le jouer à droite\n")
+                emplacement=input("\nOù voulez vous jouer votre domino?\nG pour le jouer à gauche\nD pour le jouer à droite\n0 pour revenir au choix du domino")
 
-                while emplacement not in ['G', 'g', 'D', 'd']:
+                while not ((emplacement == 'G' or emplacement == 'g') and board[0].getValue()[0] == player.getHand()[number].getValue()[1]) and not ((emplacement == 'D' or emplacement == 'd') and board[len(board)-1].getValue()[1] == player.getHand()[number].getValue()[0]) and emplacement != '0':
                     clr()
                     displayBoard(board)
                     if start:
@@ -150,7 +141,15 @@ def round(player,board,start,pioche, ori_gauche, ori_droite):
                     printPos(50,35,"Erreur : Veuillez entrer une valeur valide (G, g, D, d)")
                     pos(50,35)
                     emplacement = input("\nOù voulez-vous jouer votre domino?\nG pour le jouer à gauche\nD pour le jouer à droite\n")
-
+                if emplacement == '0':
+                    emplacement_bon = False
+                    clr()
+                    displayBoard(board)
+                    if start:
+                        displayHand(player.getHand(), list(range(7)))
+                    else:
+                        displayHand(player.getHand(), tab_extrem)
+                    continue
                 clr()
                 displayBoard(board)
                 if start:
@@ -170,8 +169,7 @@ def round(player,board,start,pioche, ori_gauche, ori_droite):
                         ori_gauche = new_ori
                     elif(emplacement == 'd' or emplacement == 'D') and (ori_droite != new_ori and (ori_droite+2)%4 != new_ori):
                         ori_droite = new_ori
-
-                #print(player.getHand()[number].getValue(), board[0].getValue()[0],board[len(board)-1].getValue()[1])
+                    #print(player.getHand()[number].getValue(), board[0].getValue()[0],board[len(board)-1].getValue()[1])
                 if (emplacement=='G' or emplacement == 'g') and board[0].getValue()[0] == player.getHand()[number].getValue()[1]:
                     #deplacer tout le tableau vers la droite et placer le domino a gauche
                     player.getHand()[number].setDirection((ori_gauche+2)%4)
@@ -200,8 +198,49 @@ def round(player,board,start,pioche, ori_gauche, ori_droite):
 
 
 
+def calcPoints(player1, player2):
+    points1 = 0
+    points2 = 0
+    for i in range(len(player1.getHand())):
+        v1, v2 = player1.getHand()[i].getValue()
+        points1 += v1 + v2
+    for i in range(len(player2.getHand())):
+        v1, v2 = player2.getHand()[i].getValue()
+        points2 += v1 + v2
+    if points1 < points2:
+        return player1
+    elif points1 > points2:
+        return player2
+    else:
+        return None
 
 
+def check_victory(player1, player2,pioche):
+    if len(player1.getHand()) == 0:
+        clr()
+        print(f"{player1.getUsername()} a gagné")
+        return True
+    elif len(player2.getHand()) == 0:
+        clr()
+        print(f"{player2.getUsername()} a gagné")
+        return True
+    elif len(pioche) == 0 and not player1.getCanPlay and not player2.getCanPlay:
+        winner = calcPoints(player1, player2)
+        if winner:
+            print(f"{winner.getUsername} a gagné")
+        else:
+            print("Égalité")
+        return True
+    else:
+        return False
+
+def calc_playable(hand,extrems):
+    playables = []
+    for i in range(len(hand)):
+        (v1, v2) = hand[i].getValue()
+        if v1 in extrems or v2 in extrems:
+            playables.append(i)
+    return playables
 
 
 """ #pour afficher les mains en test 
@@ -251,5 +290,3 @@ def supression_bag(hand):
 supression_bag(hand)
 print("après distribution", bag)
 """
-
-

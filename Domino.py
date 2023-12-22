@@ -13,7 +13,6 @@ class Domino :
     def __init__(self,type):
         self.value = type
         self.direction= 1
-        self.affichage = [str(self.value[0]), str(self.value[1])]
 
     def setValue(self,value):
         self.value=value
@@ -28,13 +27,5 @@ class Domino :
     def getDirection(self):
         return(self.direction)
 
-    def setAffichage(self):
-        self.setAffichage(self.direction)
-        return self.affichage
-
     def reverse(self):
         self.value = (self.value[1], self.value[0])
-        #rev=self.value[0]
-        #self.value[0]= self.value[1]
-        #self.value[1]= rev
-

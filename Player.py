@@ -1,7 +1,4 @@
-import os
-
-from Domino import Domino
-from Display import pos, printPos
+from Display import printPos
 
 class Player:
 
@@ -40,9 +37,6 @@ class Player:
 
     def getUsername(self):
         return self.username
-    def getHand(self):
-        return self.hand
-
     def getHand(self):
         return self.hand
     def addDomino(self, domino):

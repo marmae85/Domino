@@ -1,5 +1,4 @@
 import os
-
 from logic import init, game
 from Display import displayMenu, displayRules, clr, pos, printPos
 from Save import loadGame
@@ -50,7 +49,6 @@ def main():
         else:
             clr()
             exit()
-    return 0
 
 
 def dominoString2Domino(domino):

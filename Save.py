@@ -1,5 +1,4 @@
 #format du fichier sauvegarde : nom1, nom2, main1, main2, plateau, pioche
-import os
 
 
 def saveGame(player1, player2, board, pioche):

@@ -1,4 +1,3 @@
-import os
 import random
 from Player import Player
 from Display import *
